@@ -31,10 +31,10 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleW
 def get_countries():
   country_names = []
   countries_infos = []
-  health_care_url = "https://www.numbeo.com/health-care/"
-  cost_of_living_url = "https://www.numbeo.com/cost-of-living/"
+  health_care_url_path = "https://www.numbeo.com/health-care/"
+  cost_of_living_url_path = "https://www.numbeo.com/cost-of-living/"
 
-  res = requests.get(cost_of_living_url, headers=headers)
+  res = requests.get(cost_of_living_url_path, headers=headers)
   soup = BeautifulSoup(res.content, 'html.parser')
   html_elements = soup.select('#country > option')
   
@@ -43,8 +43,8 @@ def get_countries():
       country_names.append(option.text)
 
   for country in country_names:
-    cost_of_living_url = f"{cost_of_living_url}country_result.jsp?country={country.replace(" ", "+")}&displayCurrency=USD"
-    health_care_url = f"{health_care_url}country_result.jsp?country={country.replace(" ", "+")}"
+    cost_of_living_url = f"{cost_of_living_url_path}country_result.jsp?country={country.replace(" ", "+")}&displayCurrency=USD"
+    health_care_url = f"{health_care_url_path}country_result.jsp?country={country.replace(" ", "+")}"
     countries_infos.append({'name': country, 'cost-of-living-url': cost_of_living_url, 'health-care-url': health_care_url})
   
   return countries_infos
